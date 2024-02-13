@@ -1,0 +1,18 @@
+---
+// API import
+import { getCategories } from "../graphql/wpQuery";
+
+const data = await getCategories();
+//categories.posts.edges[0].node.categories.nodes[0].name
+const categories = [];
+const edges = data.posts.edges;
+for (var i = 0; i < edges.length; i++) {
+  let temp = edges[i].node.categories.nodes;
+  for (var j = 0; j < temp.length; j++) {
+    let cat = temp[j].name;
+    categories.push(cat); // TODO: Get this working
+  }
+}
+---
+
+<ul></ul>
