@@ -1,5 +1,9 @@
 ---
+// Layout Imports
 import Layout from "../layouts/Layout.astro";
+
+// Component Imports
+import SiteNav from "../components/SiteNav.astro";
 import Card from "../components/Card.astro";
 
 import { getPosts, getCategories } from "../graphql/wpQuery";
@@ -10,18 +14,19 @@ const categories = await getCategories();
 
 const posts = data.posts.edges;
 
-console.log("test: " + categories.posts.edges[0].node.categories.nodes[0].name);
+//console.log("test: " + categories.posts.edges[0].node.categories.nodes[0].name);
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
+    <SiteNav />
     <!-- {data && <p>{data.posts.edges[0].node.title}</p>} -->
     {
       data &&
         posts.map((post) => (
           <>
             <h2>{post.node.title}</h2>
-            <p>{post.node.content}</p>
+            <p set:html={post.node.content} />
           </>
         ))
     }

@@ -10,9 +10,22 @@ for (var i = 0; i < edges.length; i++) {
   let temp = edges[i].node.categories.nodes;
   for (var j = 0; j < temp.length; j++) {
     let cat = temp[j].name;
-    categories.push(cat); // TODO: Get this working
+    if (!categories.includes(cat)) {
+      categories.push(cat);
+    }
   }
 }
+
+categories.sort();
+// TODO actually generate routes based on the categories
 ---
 
-<ul></ul>
+<ul>
+  {
+    categories.map((cat) => (
+      <li>
+        <a href="#">{cat}</a>
+      </li>
+    ))
+  }
+</ul>
