@@ -4,6 +4,7 @@ import { getCategories } from "../graphql/wpQuery";
 
 const data = await getCategories();
 //categories.posts.edges[0].node.categories.nodes[0].name
+// maybe make this an object instead so I can push the name and the slug
 const categories = [];
 const edges = data.posts.edges;
 for (var i = 0; i < edges.length; i++) {
@@ -20,12 +21,33 @@ categories.sort();
 // TODO actually generate routes based on the categories
 ---
 
-<ul>
-  {
-    categories.map((cat) => (
-      <li>
-        <a href="#">{cat}</a>
-      </li>
-    ))
+<nav class="navbar">
+  <ul>
+    {
+      categories.map((cat) => (
+        <li>
+          <a href="#">{cat}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .navbar {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1500px;
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+    border: 1px solid red;
   }
-</ul>
+
+  nav li {
+    list-style: none;
+    display: inline;
+  }
+</style>

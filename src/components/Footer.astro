@@ -1,0 +1,21 @@
+---
+
+---
+
+<footer>
+  <small>
+    &copy; Copyright Lunar Digital <span id="copyright"></span> | All rights reserved
+  </small>
+</footer>
+
+<script>
+  document.querySelector("#copyright").textContent = new Date()
+    .getFullYear()
+    .toString();
+</script>
+
+<style>
+  html {
+    color: white;
+  }
+</style>

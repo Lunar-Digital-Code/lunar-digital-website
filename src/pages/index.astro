@@ -4,13 +4,13 @@ import Layout from "../layouts/Layout.astro";
 
 // Component Imports
 import SiteNav from "../components/SiteNav.astro";
+import Footer from "../components/Footer.astro";
 import Card from "../components/Card.astro";
 
-import { getPosts, getCategories } from "../graphql/wpQuery";
+import { getPosts } from "../graphql/wpQuery";
 
 // GraphQL Query for blog posts
 const data = await getPosts();
-const categories = await getCategories();
 
 const posts = data.posts.edges;
 
@@ -30,6 +30,7 @@ const posts = data.posts.edges;
           </>
         ))
     }
+    <Footer />
   </main>
 </Layout>
 

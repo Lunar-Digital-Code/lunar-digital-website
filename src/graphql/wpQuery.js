@@ -14,8 +14,7 @@ export async function getPosts() {
             }
           }
         }
-            }
-          `,
+      }`,
     }),
   });
   const { data } = await response.json();
