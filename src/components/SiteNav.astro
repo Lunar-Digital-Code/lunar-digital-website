@@ -21,7 +21,7 @@ categories.sort();
 // TODO actually generate routes based on the categories
 ---
 
-<nav class="navbar">
+<nav>
   <ul>
     {
       categories.map((cat) => (
@@ -34,7 +34,7 @@ categories.sort();
 </nav>
 
 <style>
-  .navbar {
+  nav {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
@@ -49,5 +49,9 @@ categories.sort();
   nav li {
     list-style: none;
     display: inline;
+  }
+
+  nav a {
+    text-decoration: none;
   }
 </style>
