@@ -2,31 +2,43 @@
 // API import
 import { getCategories } from "../graphql/wpQuery";
 
-const data = await getCategories();
+// const data = await getCategories();
 //categories.posts.edges[0].node.categories.nodes[0].name
 // maybe make this an object instead so I can push the name and the slug
-const categories = [];
-const edges = data.posts.edges;
-for (var i = 0; i < edges.length; i++) {
-  let temp = edges[i].node.categories.nodes;
-  for (var j = 0; j < temp.length; j++) {
-    let cat = temp[j].name;
-    if (!categories.includes(cat)) {
-      categories.push(cat);
-    }
-  }
-}
+// const allCategories = [];
+// const edges = data.posts.edges;
+// for (var i = 0; i < edges.length; i++) {
+//   let temp = edges[i].node.categories.nodes;
+//   for (var j = 0; j < temp.length; j++) {
+//     let cat = temp[j].name;
+//     if (!allCategories.includes(cat)) {
+//       allCategories.push(cat);
+//     }
+//   }
+// }
 
-categories.sort();
-// TODO actually generate routes based on the categories
+const categories = await getCategories();
+const catNodes = categories.posts.edges.map(
+  (edge) => edge.node.categories.nodes
+);
+const catList = [...new Set(catNodes.flat().map((cat) => cat.slug))];
 ---
 
 <nav>
-  <ul>
+  <!-- <ul>
     {
-      categories.map((cat) => (
+      allCategories.map((cat) => (
         <li>
           <a href="#">{cat}</a>
+        </li>
+      ))
+    }
+  </ul> -->
+  <ul>
+    {
+      catList.map((cat) => (
+        <li>
+          <a href={`/categories/${cat}/`}>{cat}</a>
         </li>
       ))
     }

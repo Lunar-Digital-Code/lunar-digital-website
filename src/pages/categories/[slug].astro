@@ -1,0 +1,42 @@
+---
+import { getCategories, getPosts } from "../../graphql/wpQuery";
+
+export async function getStaticPaths() {
+  const categories = await getCategories();
+
+  return categories.posts.edges
+    .map(({ node }) => {
+      return node.categories.nodes.map((cat) => {
+        return {
+          params: {
+            slug: cat.slug,
+          },
+        };
+      });
+    })
+    .flat();
+}
+
+const { slug } = Astro.params;
+
+const posts = Array.from(await getPosts());
+console.log("TEST: " + posts);
+
+const catPosts = posts.filter((post) => {
+  return post.node.categories.nodes.some((cat) => {
+    return cat.slug === slug;
+  });
+});
+---
+
+<h1>{slug}</h1>
+
+<ul>
+  {
+    catPosts.map((post) => (
+      <li>
+        <a href={post.node.uri}>{post.node.title}</a>
+      </li>
+    ))
+  }
+</ul>
