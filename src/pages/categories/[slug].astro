@@ -1,8 +1,8 @@
 ---
-import { getCategories, getPosts } from "../../graphql/wpQuery";
+import { getPosts } from "../../graphql/wpQuery";
 
 export async function getStaticPaths() {
-  const categories = await getCategories();
+  const categories = await getPosts();
 
   return categories.posts.edges
     .map(({ node }) => {
@@ -19,24 +19,42 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 
-const posts = Array.from(await getPosts());
-console.log("TEST: " + posts);
+// Get all posts that match the category slug
+// loop through the array of posts and compare the categories of that post to the page slug
+// Add the post to a new array if it matches
 
-const catPosts = posts.filter((post) => {
-  return post.node.categories.nodes.some((cat) => {
-    return cat.slug === slug;
-  });
-});
+const allPosts = await getPosts();
+
+console.log("ALL POSTS: " + JSON.stringify(allPosts, null, 2));
+
+// const catPosts = allPosts.filter((post) => {
+//   return post.node.categories.nodes.map((cat) => cat.slug).includes(slug);
+// });
+
+// This is how you get the category slug
+//const catPosts = allPosts.posts.edges[0].node.categories.nodes[0].slug;
+
+// This gets all the categories associated with a post
+// const catPosts = allPosts.posts.edges[0].node.categories.nodes.map(
+//   (cat) => cat.slug
+// );
+
+// This gets all the categories associated with all the posts
+// const catPosts = allPosts.posts.edges.map((post) => {
+//   return post.node.categories.nodes.map((cat) => cat.slug);
+// });
+
+//console.log(catPosts);
 ---
 
 <h1>{slug}</h1>
 
 <ul>
-  {
-    catPosts.map((post) => (
+  <!-- {
+    posts.map((post) => (
       <li>
         <a href={post.node.uri}>{post.node.title}</a>
       </li>
     ))
-  }
+  } -->
 </ul>

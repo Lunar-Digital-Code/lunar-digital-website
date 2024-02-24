@@ -11,6 +11,12 @@ export async function getPosts() {
               title
               uri
               content
+              categories {
+                nodes {
+                  name
+                  slug
+                }
+              }
             }
           }
         }
