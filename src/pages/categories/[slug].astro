@@ -1,4 +1,7 @@
 ---
+// Layout Import
+import Layout from "../../layouts/Layout.astro";
+
 import { getPosts } from "../../graphql/wpQuery";
 
 export async function getStaticPaths() {
@@ -66,14 +69,18 @@ catPosts.forEach((cat) => {
 console.log("CATEGORIES: " + posts);
 ---
 
-<h1>All {pageTitle} Posts</h1>
+<Layout title={pageTitle + " Page"}>
+  <main>
+    <h1>All {pageTitle} Posts</h1>
 
-<ul>
-  {
-    posts.map((post) => (
-      <li>
-        <a href={post.node.uri}>{post.node.title}</a>
-      </li>
-    ))
-  }
-</ul>
+    <ul>
+      {
+        posts.map((post) => (
+          <li>
+            <a href={post.node.uri}>{post.node.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>

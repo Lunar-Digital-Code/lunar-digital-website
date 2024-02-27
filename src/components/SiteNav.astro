@@ -2,20 +2,7 @@
 // API import
 import { getCategories } from "../graphql/wpQuery";
 
-// const data = await getCategories();
-//categories.posts.edges[0].node.categories.nodes[0].name
-// maybe make this an object instead so I can push the name and the slug
-// const allCategories = [];
-// const edges = data.posts.edges;
-// for (var i = 0; i < edges.length; i++) {
-//   let temp = edges[i].node.categories.nodes;
-//   for (var j = 0; j < temp.length; j++) {
-//     let cat = temp[j].name;
-//     if (!allCategories.includes(cat)) {
-//       allCategories.push(cat);
-//     }
-//   }
-// }
+// May need to create a "slugify" utility for more complex slugs
 
 const categories = await getCategories();
 const catNodes = categories.posts.edges.map(
@@ -25,15 +12,6 @@ const catList = [...new Set(catNodes.flat().map((cat) => cat.slug))];
 ---
 
 <nav>
-  <!-- <ul>
-    {
-      allCategories.map((cat) => (
-        <li>
-          <a href="#">{cat}</a>
-        </li>
-      ))
-    }
-  </ul> -->
   <ul>
     {
       catList.map((cat) => (
@@ -43,6 +21,7 @@ const catList = [...new Set(catNodes.flat().map((cat) => cat.slug))];
       ))
     }
   </ul>
+  <a class="home" href="/">Home</a>
 </nav>
 
 <style>
@@ -58,6 +37,9 @@ const catList = [...new Set(catNodes.flat().map((cat) => cat.slug))];
     border: 1px solid red;
   }
 
+  .home {
+  }
+
   nav li {
     list-style: none;
     display: inline;
@@ -65,5 +47,13 @@ const catList = [...new Set(catNodes.flat().map((cat) => cat.slug))];
 
   nav a {
     text-decoration: none;
+  }
+
+  nav a:visited {
+    color: white;
+  }
+
+  nav a:hover {
+    color: lightgrey;
   }
 </style>
