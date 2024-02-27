@@ -19,6 +19,11 @@ export async function getStaticPaths() {
 
 const { slug } = Astro.params;
 
+// Regex to capitalize the first letter of each word in the slug
+const pageTitle = String(slug).replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+  letter.toUpperCase()
+);
+
 // Get all posts that match the category slug
 // loop through the array of posts and compare the categories of that post to the page slug
 // Add the post to a new array if it matches
@@ -50,7 +55,7 @@ const catPosts = allPosts.posts.edges.map((post) => {
   return post.node.categories.nodes.map((cat) => cat.slug);
 });
 
-console.log("CATEGORIES: " + catPosts);
+//console.log("CATEGORIES: " + catPosts);
 
 catPosts.forEach((cat) => {
   if (cat.includes(slug)) {
@@ -58,10 +63,10 @@ catPosts.forEach((cat) => {
   }
 });
 
-console.log(posts);
+console.log("CATEGORIES: " + posts);
 ---
 
-<h1>All {slug} Posts</h1>
+<h1>All {pageTitle} Posts</h1>
 
 <ul>
   {
