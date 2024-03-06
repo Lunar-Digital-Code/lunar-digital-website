@@ -1,0 +1,33 @@
+---
+import type { GetStaticPaths } from "astro";
+// Layout Import
+import Layout from "../../layouts/Layout.astro";
+
+// Import API
+import { getPosts } from "../../graphql/wpQuery";
+
+export async function getStaticPaths() {
+  const allPosts = await getPosts();
+
+  return allPosts.posts.edges
+    .map(({ node }) => {
+      return node.map((post) => {
+        return {
+          params: {
+            title: post.title,
+            content: post.content,
+            slug: post.slug,
+          },
+        };
+      });
+    })
+    .flat();
+}
+
+const { slug, content, title } = Astro.params;
+---
+
+<Layout title="Replace this with the post title">
+  <h1>{title}</h1>
+  <p>{content}</p>
+</Layout>

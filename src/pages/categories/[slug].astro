@@ -67,6 +67,8 @@ catPosts.forEach((cat) => {
 });
 
 console.log("CATEGORIES: " + posts);
+
+// TODO: get the link to work properly
 ---
 
 <Layout title={pageTitle + " Page"}>
@@ -77,7 +79,7 @@ console.log("CATEGORIES: " + posts);
       {
         posts.map((post) => (
           <li>
-            <a href={post.node.uri}>{post.node.title}</a>
+            <a href=`/posts/${post.node.slug}`>{post.node.title}</a>
           </li>
         ))
       }
